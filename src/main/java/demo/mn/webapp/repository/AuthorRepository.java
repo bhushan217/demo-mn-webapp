@@ -2,21 +2,20 @@ package demo.mn.webapp.repository;
 
 import demo.mn.webapp.model.Author;
 import io.micronaut.context.annotation.Executable;
+import io.micronaut.data.annotation.Join;
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.CrudRepository;
-
-import java.util.List;
-import java.util.Optional;
+import io.micronaut.data.repository.PageableRepository;
 
 
 @JdbcRepository(dialect = Dialect.H2)
-public
-interface AuthorRepository extends CrudRepository<Author, Long> {
+public interface AuthorRepository extends CrudRepository<Author, Long>, PageableRepository<Author, Long> {
+
     @Executable
-    Author find(String name);
+    @Join(value = "books", alias = "b_")
+    Page<Author> findAll(Pageable pageable);
 
-    Optional<Author> findByIdForUpdate(Long id);
-
-    List<Author> findByNameForUpdate(String title);
 }

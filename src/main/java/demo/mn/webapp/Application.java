@@ -28,11 +28,12 @@ record Application(BookRepository bookRepository, AuthorRepository authorReposit
                 .map(Application::getAuthor)
                 .collect(Collectors.toList());
         authorRepository.saveAll(authorList);
-        final Iterable<Author> authorList2 = authorRepository.findAll();
+        final List<Author> authorList2 = (List<Author>) authorRepository.findAll();
         final List<Book> bookList = bookConfigurations.stream()
-                .map(config -> getBook(config, (List<Author>) authorList2))
+                .map(config -> getBook(config,  authorList2))
                 .collect(Collectors.toList());
         bookRepository.saveAll(bookList);
+        authorList2.stream().forEach(authorRepository::update);
     }
 
     static Author getAuthor(AppConfiguration.BookConfiguration config) {
