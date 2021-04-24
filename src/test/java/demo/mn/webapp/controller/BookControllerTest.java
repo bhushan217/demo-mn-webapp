@@ -66,7 +66,7 @@ class BookControllerTest {
         //Optional<Book> rsp = client.toBlocking().retrieve(HttpRequest.GET(PATH+"/1"), Optional.class);
         //assertEquals(200, rsp.getStatus().getCode());
         final Book book = client.findById(1L).get();
-        assertNotNull(book.title());
+        assertNotNull(book.getTitle());
     }
 
     @DisplayName("Calls With Pageable")
@@ -75,11 +75,11 @@ class BookControllerTest {
         String uri = PATH + "/?page=0&size=2";// "/{\"page\":1,\"size\":2}";
 
         //Page<String> pages = client.toBlocking().retrieve(HttpRequest.GET(uri), Page.class);//, pageOf(String.class)
-        Slice<Book> pages = client.list(Pageable.from(1));
+        Slice<Book> pages = client.list(Pageable.from(0,2));
 
-        assertEquals(1, pages.getPageNumber());
+        assertEquals(0, pages.getPageNumber());
 //        assertEquals(1, pages.getTotalPages());
-        assertEquals(10, pages.getSize());
+        assertEquals(2, pages.getSize());
         assertEquals(0, pages.getContent().size());
     }
 }
