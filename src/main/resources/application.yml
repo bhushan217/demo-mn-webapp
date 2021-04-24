@@ -1,0 +1,30 @@
+micronaut:
+  application:
+    name: demoMnWebapp
+  data:
+    pageable:
+     max-page-size: 5
+#  ssl:
+#    enabled: true
+#    buildSelfSigned: true
+datasources:
+  default:
+#    url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    url:  jdbc:h2:~/devDBTest;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+    schema-generate: CREATE_DROP
+    dialect: H2
+store:
+  name: Shah Book Center
+  books:
+    ycw:
+      name: you can win
+      pages: 400
+      author: Shiv Khera
+    te:
+      name: Three Idiots
+      pages: 500
+      author: Chetan Bhagat
+      isNew: false
